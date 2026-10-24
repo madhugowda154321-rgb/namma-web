@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namma Web Advanced AI Research Labs | Namma Web LLP</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        techNavy: '#0f172a',
+                        slateDark: '#1e293b',
+                        electricTeal: '#0d9488',
+                        warmGold: '#d97706',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-techNavy text-slate-100 font-sans antialiased selection:bg-electricTeal selection:text-white" x-data="nammaWebAppData()">
+
+    <!-- STICKY HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-techNavy/90 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo & Name -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-11 h-11 bg-white rounded-lg p-1.5 shadow-md flex items-center justify-center border border-electricTeal/30 group-hover:scale-105 transition-transform">
+                    <img src="logo.jpeg" alt="Namma Web official logo" class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                        NAMMA WEB <span class="text-electricTeal text-xs px-2 py-0.5 rounded bg-electricTeal/10 border border-electricTeal/20">AI LABS</span>
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium">Namma Web LLP</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#overview" class="hover:text-electricTeal transition-colors">Overview</a>
+                <a href="#videos" class="hover:text-electricTeal transition-colors">Student Reviews</a>
+                <a href="#internships" class="hover:text-electricTeal transition-colors">Internship Tracks</a>
+                <a href="#partnership" class="hover:text-electricTeal transition-colors text-warmGold font-semibold flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-warmGold animate-pulse"></span> College Grant
+                </a>
+                <a href="#impact" class="hover:text-electricTeal transition-colors">Institutional Impact</a>
+                <a href="#contact" class="hover:text-electricTeal transition-colors">Contact</a>
+            </nav>
+
+            <!-- Header Right CTAs & Badges -->
+            <div class="hidden xl:flex items-center space-x-4">
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-1 text-[11px] font-semibold bg-slate-800 text-teal-400 rounded-full border border-teal-500/30">DPIIT: DIPP199820</span>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold bg-slate-800 text-amber-400 rounded-full border border-amber-500/30">ISO 21001:2018</span>
+                </div>
+                <a href="#partnership" class="bg-electricTeal hover:bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-electricTeal/20 transition-all hover:scale-[1.02]">
+                    Explore Partnership
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none">
+                <i data-lucide="menu" class="w-6 h-6" x-show="!mobileMenuOpen"></i>
+                <i data-lucide="x" class="w-6 h-6" x-show="mobileMenuOpen" x-cloak></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="lg:hidden bg-slateDark border-b border-slate-800 px-4 pt-2 pb-6 space-y-3" x-show="mobileMenuOpen" x-transition x-cloak>
+            <a @click="mobileMenuOpen = false" href="#overview" class="block py-2 text-slate-200 hover:text-electricTeal font-medium">Overview</a>
+            <a @click="mobileMenuOpen = false" href="#videos" class="block py-2 text-slate-200 hover:text-electricTeal font-medium">Student Reviews (21 Videos)</a>
+            <a @click="mobileMenuOpen = false" href="#internships" class="block py-2 text-slate-200 hover:text-electricTeal font-medium">Internship Tracks</a>
+            <a @click="mobileMenuOpen = false" href="#partnership" class="block py-2 text-warmGold font-semibold">College Internship Grant Offer</a>
+            <a @click="mobileMenuOpen = false" href="#impact" class="block py-2 text-slate-200 hover:text-electricTeal font-medium">Institutional Impact</a>
+            <a @click="mobileMenuOpen = false" href="#contact" class="block py-2 text-slate-200 hover:text-electricTeal font-medium">Contact & Location</a>
+            <div class="pt-2 flex flex-col gap-2">
+                <span class="text-xs text-slate-400">DPIIT Recognized & ISO 21001:2018 Certified</span>
+                <a @click="mobileMenuOpen = false" href="#partnership" class="w-full text-center bg-electricTeal text-white py-2.5 rounded-lg font-semibold">Explore College Partnership</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="overview" class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32 bg-gradient-to-b from-techNavy via-slateDark to-techNavy">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-electricTeal/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-warmGold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-full bg-slate-800/90 border border-slate-700 shadow-sm text-xs font-medium">
+                        <span class="flex h-2 w-2 rounded-full bg-electricTeal animate-ping"></span>
+                        <span class="text-slate-300">DPIIT Recognized Startup (<span class="text-teal-400 font-semibold">DIPP199820</span>)</span>
+                        <span class="text-slate-600">|</span>
+                        <span class="text-amber-400 font-semibold">ISO 21001:2018 Certified</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
+                        Sovereign Edge-AI & Production-Grade Tech Infrastructure for <span class="text-transparent bg-clip-text bg-gradient-to-r from-electricTeal to-teal-200">Karnataka Institutions</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Empowering students and institutions through practical AI education, real-world projects, emerging technology initiatives, and career-focused learning pathways.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#partnership" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-electricTeal hover:bg-teal-600 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-electricTeal/25 transition-all hover:scale-105">
+                            <span>Explore College Partnership</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#videos" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3.5 rounded-xl border border-slate-700 transition-all">
+                            <i data-lucide="play-circle" class="w-4 h-4 text-electricTeal"></i>
+                            <span>View Student Success Stories</span>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-slate-800/80">
+                        <div class="glass-card p-3 rounded-xl text-center">
+                            <div class="text-xl font-bold text-white">DIPP199820</div>
+                            <div class="text-xs text-slate-400 mt-0.5">DPIIT Recognized</div>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl text-center">
+                            <div class="text-xl font-bold text-amber-400">ISO</div>
+                            <div class="text-xs text-slate-400 mt-0.5">21001:2018 Certified</div>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl text-center">
+                            <div class="text-xl font-bold text-white">FKCCI</div>
+                            <div class="text-xl font-bold text-teal-400 text-sm">Manthan Winner</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Award Recipient</div>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl text-center">
+                            <div class="text-xl font-bold text-teal-300">InfiniTalent</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Govt-Partnered TPA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Image Showcase -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <!-- Image 1 -->
+                        <div class="glass-card p-3 rounded-2xl shadow-2xl relative z-20 group">
+                            <div class="overflow-hidden rounded-xl aspect-[4/3] bg-slate-900">
+                                <img src="nelamangla.png" alt="Namma Web office signboard and team member in Nelamangala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="mt-3 px-2 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-electricTeal"></div>
+                                    <span class="text-xs font-semibold text-slate-200">Nelamangala Branch & Office HQ</span>
+                                </div>
+                                <span class="text-[11px] text-slate-400">Verified Facility</span>
+                            </div>
+                        </div>
+
+                        <!-- Image 2 -->
+                        <div class="absolute -bottom-8 -left-8 w-2/3 glass-card p-2 rounded-2xl shadow-2xl z-30 hidden sm:block border border-electricTeal/30">
+                            <div class="overflow-hidden rounded-lg aspect-[16/10] bg-slate-900">
+                                <img src="WhatsApp Image 2026-10-18 at 1.08.10 PM.jpeg" alt="Institutional auditorium event engagement" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-1.5 text-[11px] font-medium text-slate-300 flex items-center gap-1.5">
+                                <i data-lucide="users" class="w-3.5 h-3.5 text-warmGold"></i>
+                                <span>Institutional Partnership Event</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT NAMMA WEB SECTION WITH WORKING EMBEDDED VIDEO -->
+    <section id="about" class="py-20 bg-slateDark/50 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-electricTeal/10 text-electricTeal text-xs font-bold uppercase tracking-wider">
+                        <span>Institution Profile</span>
+                    </div>
+                    
+                    <!-- Namma Web Heading with Logo embedded at the last left corner -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-lg p-1.5 shadow-md shrink-0 flex items-center justify-center border border-electricTeal/30">
+                            <img src="logo.jpeg" alt="Namma Web official logo" class="w-full h-full object-contain">
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-snug">
+                            Namma Web Advanced AI Research Labs — Namma Web LLP
+                        </h2>
+                    </div>
+
+                    <p class="text-slate-300 leading-relaxed">
+                        Headquartered in Karnataka with branches across Bengaluru (Peenya) and Nelamangala, Namma Web is a pioneering DPIIT-recognized startup and ISO 21001:2018 certified educational technology research institution. We bridge the gap between academic theory and production-grade software engineering through hands-on AI research, local Retrieval-Augmented Generation (RAG) architectures, and structured institutional skill training programs.
+                    </p>
+                    <div class="space-y-3 pt-2">
+                        <div class="flex items-start gap-3">
+                            <div class="p-1 rounded bg-electricTeal/20 text-electricTeal mt-1"><i data-lucide="check" class="w-4 h-4"></i></div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Practical AI Research & Development</h4>
+                                <p class="text-xs text-slate-400">Building edge-AI models, Python APIs, FastAPI microservices, and ChromaDB vector databases.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="p-1 rounded bg-electricTeal/20 text-electricTeal mt-1"><i data-lucide="check" class="w-4 h-4"></i></div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Institutional Collaboration & College Partnerships</h4>
+                                <p class="text-xs text-slate-400">Active engagement with degree colleges, technical institutes, and industry bodies across Karnataka.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Guaranteed Working Embedded Video with Poster & Direct Player -->
+                <div class="lg:col-span-7">
+                    <div class="glass-card p-4 rounded-3xl shadow-2xl space-y-4 border border-electricTeal/30">
+                        <div class="flex items-center justify-between px-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-electricTeal animate-pulse"></span>
+                                <h4 class="text-sm font-bold text-white">Nelamangala Office Walkthrough</h4>
+                            </div>
+                            <span class="text-[11px] text-teal-400 bg-teal-950/60 px-2.5 py-1 rounded-full border border-teal-500/30">Live Workspace Preview</span>
+                        </div>
+
+                        <!-- Robust HTML5 Video Player Container -->
+                        <div class="relative overflow-hidden rounded-2xl aspect-[16/9] bg-slate-950 border border-slate-800 shadow-inner group">
+                            <video 
+                                class="w-full h-full object-cover rounded-xl" 
+                                controls 
+                                preload="auto"
+                                poster="nelamangla.png"
+                                playsinline>
+                                <source src="WhatsApp Video 2026-10-20 at 1.03.34 PM.mp4" type="video/mp4">
+                                <source src="https://lh3.googleusercontent.com/d/1fNlS8NV6m1W2_R-KbJjurROIAboyXghG=s2200?authuser=0" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <p class="text-xs text-slate-400 text-center">Take a live walkthrough of our production-grade workspace and research facility at Nelamangala HQ.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERNSHIP PROGRAMS SECTION -->
+    <section id="internships" class="py-20 bg-techNavy relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="px-3 py-1 rounded-full bg-electricTeal/10 text-electricTeal text-xs font-bold uppercase tracking-wider border border-electricTeal/20">Career Pathways</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Specialized Internship Programs</h2>
+                <p class="text-slate-300 text-base">
+                    Tailored industry-aligned internship tracks designed specifically for BCA, BBA, and BCOM degree students to master emerging technologies and business workflows.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- BCA Program Card -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between border-t-4 border-t-electricTeal hover:border-electricTeal/60 transition-all group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-electricTeal/10 flex items-center justify-center text-electricTeal mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="code-2" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-teal-400 uppercase tracking-wider">BCA Students</span>
+                        <h3 class="text-2xl font-bold text-white mt-1 mb-3">AI & Software Engineering</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Master production-grade full-stack development combined with local artificial intelligence models.
+                        </p>
+                        <div class="space-y-2.5 mb-8">
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricTeal shrink-0"></i><span>Full-Stack Edge-AI & Python Applications</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricTeal shrink-0"></i><span>FastAPI backend & API development</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricTeal shrink-0"></i><span>ChromaDB vector storage integration</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-electricTeal shrink-0"></i><span>Local Retrieval-Augmented Generation (RAG)</span></div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="w-full text-center bg-slate-800 hover:bg-electricTeal text-slate-200 hover:text-white font-semibold py-3 rounded-xl transition-colors text-sm border border-slate-700">Enquire About BCA Track</a>
+                </div>
+
+                <!-- BBA Program Card -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between border-t-4 border-t-warmGold hover:border-warmGold/60 transition-all group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-warmGold/10 flex items-center justify-center text-warmGold mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">BBA Students</span>
+                        <h3 class="text-2xl font-bold text-white mt-1 mb-3">AI & Business Operations</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Leverage modern AI tools, business intelligence, and agile operations to scale organizational growth.
+                        </p>
+                        <div class="space-y-2.5 mb-8">
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-warmGold shrink-0"></i><span>AI-powered business growth & strategy</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-warmGold shrink-0"></i><span>Workflow & enterprise automation</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-warmGold shrink-0"></i><span>Agile product operations & management</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-warmGold shrink-0"></i><span>Digital marketing & customer analytics</span></div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="w-full text-center bg-slate-800 hover:bg-warmGold text-slate-200 hover:text-white font-semibold py-3 rounded-xl transition-colors text-sm border border-slate-700">Enquire About BBA Track</a>
+                </div>
+
+                <!-- BCOM Program Card -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between border-t-4 border-t-teal-400 hover:border-teal-400/60 transition-all group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-teal-400/10 flex items-center justify-center text-teal-300 mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="pie-chart" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-teal-300 uppercase tracking-wider">BCOM Students</span>
+                        <h3 class="text-2xl font-bold text-white mt-1 mb-3">FinTech & Digital Compliance</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Bridge modern financial technologies, automated auditing, and digital tax compliance workflows.
+                        </p>
+                        <div class="space-y-2.5 mb-8">
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-300 shrink-0"></i><span>FinTech fundamentals & digital banking</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-300 shrink-0"></i><span>Smart accounting & ledger automation</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-300 shrink-0"></i><span>Digital tax filing & compliance systems</span></div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-teal-300 shrink-0"></i><span>Financial process automation</span></div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="w-full text-center bg-slate-800 hover:bg-teal-600 text-slate-200 hover:text-white font-semibold py-3 rounded-xl transition-colors text-sm border border-slate-700">Enquire About BCOM Track</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXCLUSIVE COLLEGE PARTNERSHIP GRANT OFFER -->
+    <section id="partnership" class="py-20 bg-gradient-to-r from-slateDark via-techNavy to-slateDark border-y border-slate-800 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-warmGold/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 border-2 border-warmGold/40 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-warmGold/10 text-warmGold text-xs font-bold uppercase tracking-wider border border-warmGold/20">
+                            <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                            <span>Institutional Partnership Offer</span>
+                        </div>
+                        
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                            Exclusive College Internship Grant Offer
+                        </h2>
+                        
+                        <p class="text-slate-300 text-base leading-relaxed">
+                            Designed to empower college students across Karnataka with subsidized, industry-certified AI training programs. Backed by our ISO 21001:2018 certification and InfiniTalent government-partnered placement support frameworks.
+                        </p>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
+                            <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                                <div class="text-xs text-slate-400">Standard Fee</div>
+                                <div class="text-xl font-bold text-slate-400 line-through mt-0.5">₹12,000</div>
+                                <div class="text-[11px] text-slate-500">Per Student</div>
+                            </div>
+                            <div class="bg-slate-900/60 p-4 rounded-xl border border-warmGold/40 bg-warmGold/5">
+                                <div class="text-xs text-warmGold font-semibold">Partnership Price</div>
+                                <div class="text-2xl font-extrabold text-warmGold mt-0.5">₹9,000</div>
+                                <div class="text-[11px] text-warmGold/80">Per Student</div>
+                            </div>
+                            <div class="bg-slate-900/60 p-4 rounded-xl border border-teal-500/30 col-span-2 sm:col-span-1">
+                                <div class="text-xs text-teal-400 font-semibold">Institutional Grant</div>
+                                <div class="text-2xl font-extrabold text-white mt-0.5">25% OFF</div>
+                                <div class="text-[11px] text-teal-300">Save ₹3,000 / student</div>
+                            </div>
+                        </div>
+
+                        <div class="text-xs text-slate-400 italic">
+                            * Note: Eligibility, batch availability, and final terms should be confirmed directly with Namma Web institutional partnership coordinators. Placement support is facilitated via InfiniTalent TPA frameworks without universal guaranteed employment claims.
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex flex-col justify-center items-center lg:items-end">
+                        <div class="bg-slate-900/80 p-8 rounded-2xl border border-slate-700 w-full max-w-md text-center space-y-6">
+                            <div class="w-16 h-16 bg-warmGold/10 rounded-full flex items-center justify-center text-warmGold mx-auto">
+                                <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-bold text-white">Secure College Grant</h3>
+                                <p class="text-xs text-slate-300">
+                                    Book an institutional presentation or faculty briefing session for your degree college.
+                                </p>
+                            </div>
+                            <a href="#contact" class="block w-full bg-warmGold hover:bg-amber-600 text-slate-950 font-bold py-3.5 rounded-xl shadow-lg shadow-warmGold/20 transition-all text-sm">
+                                Enquire for College Partnership
+                            </a>
+                            <div class="text-[11px] text-slate-400">
+                                Direct Email: <a href="mailto:info@nammaweb.com" class="text-electricTeal underline">info@nammaweb.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT OUR STUDENTS & INTERNS SAY (21 VIDEOS WITH DIRECT REDIRECT) -->
+    <section id="videos" class="py-20 bg-techNavy">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-data="videoGallery()">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="px-3 py-1 rounded-full bg-electricTeal/10 text-electricTeal text-xs font-bold uppercase tracking-wider border border-electricTeal/20">Student Voice</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">What Our Students & Interns Say</h2>
+                <p class="text-slate-300 text-base">
+                    Explore all 21 verified student review videos, YouTube Shorts, and Instagram Reels. Clicking any video card will instantly open and play the video directly on YouTube or Instagram in a new tab.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2 pt-4">
+                    <button @click="filter = 'all'" :class="filter === 'all' ? 'bg-electricTeal text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'" class="px-4 py-2 rounded-lg text-xs font-semibold transition-all">All Videos (21)</button>
+                    <button @click="filter = 'youtube'" :class="filter === 'youtube' ? 'bg-electricTeal text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'" class="px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5"><i data-lucide="youtube" class="w-3.5 h-3.5"></i> YouTube Shorts (13)</button>
+                    <button @click="filter = 'instagram'" :class="filter === 'instagram' ? 'bg-electricTeal text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'" class="px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5"><i data-lucide="instagram" class="w-3.5 h-3.5"></i> Instagram Reels (8)</button>
+                </div>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <template x-for="video in filteredVideos" :key="video.id">
+                    <a :href="video.url" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-electricTeal transition-all shadow-xl block cursor-pointer">
+                        
+                        <!-- 9:16 Vertical Video Container Preview -->
+                        <div class="relative bg-slate-950 aspect-[9/16] w-full overflow-hidden flex items-center justify-center">
+                            
+                            <template x-if="video.platform === 'youtube'">
+                                <img :src="'https://img.youtube.com/vi/' + video.videoId + '/hqdefault.jpg'" :alt="video.title" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500">
+                            </template>
+                            <template x-if="video.platform === 'instagram'">
+                                <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-900 via-slate-900 to-pink-950 opacity-80 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                                    <i data-lucide="instagram" class="w-16 h-16 text-pink-500/40"></i>
+                                </div>
+                            </template>
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+
+                            <div class="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-md z-10" :class="video.platform === 'youtube' ? 'bg-red-600 text-white' : 'bg-pink-600 text-white'">
+                                <i :data-lucide="video.platform === 'youtube' ? 'youtube' : 'instagram'" class="w-3 h-3"></i>
+                                <span x-text="video.platform === 'youtube' ? 'YouTube Short' : 'Instagram Reel'"></span>
+                            </div>
+
+                            <div class="relative z-10 w-14 h-14 rounded-full bg-electricTeal group-hover:bg-teal-400 text-white flex items-center justify-center shadow-xl shadow-electricTeal/50 group-hover:scale-110 transition-transform">
+                                <i data-lucide="play" class="w-6 h-6 ml-0.5"></i>
+                            </div>
+
+                            <div class="absolute bottom-3 left-3 right-3 text-center z-10">
+                                <span class="text-xs font-semibold text-white drop-shadow-md line-clamp-2" x-text="video.title"></span>
+                            </div>
+
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="p-3.5 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full" :class="video.platform === 'youtube' ? 'bg-red-500' : 'bg-pink-500'"></span>
+                                <span class="text-xs font-medium text-slate-300 truncate max-w-[160px]" x-text="video.title"></span>
+                            </div>
+                            <span class="text-xs font-semibold text-electricTeal flex items-center gap-1 group-hover:underline">
+                                <span x-text="video.platform === 'youtube' ? 'Watch on YouTube' : 'Watch on Instagram'"></span>
+                                <i data-lucide="external-link" class="w-3 h-3"></i>
+                            </span>
+                        </div>
+
+                    </a>
+                </template>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INSTITUTIONAL IMPACT AND PHOTO GALLERY (ALL 5 PHOTOGRAPHS) -->
+    <section id="impact" class="py-20 bg-slateDark/40 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="px-3 py-1 rounded-full bg-electricTeal/10 text-electricTeal text-xs font-bold uppercase tracking-wider border border-electricTeal/20">Institutional Engagement</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Real Institutional Engagement. Practical AI Innovation.</h2>
+                <p class="text-slate-300 text-base">
+                    Explore our journey across Karnataka institutions, industry panels, classroom mentorship sessions, and campus visits.
+                </p>
+            </div>
+
+            <!-- Photo Gallery Grid (Images 1 to 5) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Gallery Item 1 -->
+                <div class="glass-card rounded-2xl p-4 group">
+                    <div class="overflow-hidden rounded-xl aspect-[4/3] bg-slate-900">
+                        <img src="nelamangla.png" alt="Namma Web office signboard and team member in Nelamangala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="mt-4 space-y-1">
+                        <span class="text-[11px] font-bold text-electricTeal uppercase tracking-wider">Office Branding</span>
+                        <h4 class="text-base font-bold text-white">Nelamangala Branch Headquarters</h4>
+                        <p class="text-xs text-slate-400">Located at No. 27, Jayant Arcade, Next to Harsha International Public School, Nanjappa Layout, Vijayanagara, Nelamangala.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="glass-card rounded-2xl p-4 group">
+                    <div class="overflow-hidden rounded-xl aspect-[4/3] bg-slate-900">
+                        <img src="WhatsApp Image 2026-10-18 at 1.08.10 PM.jpeg" alt="Institutional auditorium filled with attendees at event" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="mt-4 space-y-1">
+                        <span class="text-[11px] font-bold text-warmGold uppercase tracking-wider">Institutional Event</span>
+                        <h4 class="text-base font-bold text-white">Auditorium Engagement & Gathering</h4>
+                        <p class="text-xs text-slate-400">Participating in large-scale institutional events, industry summits, and community technology showcases.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="glass-card rounded-2xl p-4 group">
+                    <div class="overflow-hidden rounded-xl aspect-[4/3] bg-slate-900">
+                        <img src="WhatsApp Image 2026-10-18 at 1.07.53 PM.jpeg" alt="Presentation in front of panel at KGTTI venue" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="mt-4 space-y-1">
+                        <span class="text-[11px] font-bold text-electricTeal uppercase tracking-wider">Industry Panel</span>
+                        <h4 class="text-base font-bold text-white">KGTTI Knowledge Sharing Address</h4>
+                        <p class="text-xs text-slate-400">Presenting emerging technology initiatives and skill development frameworks at KGTTI venues.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="glass-card rounded-2xl p-4 group">
+                    <div class="overflow-hidden rounded-xl aspect-[4/3] bg-slate-900">
+                        <img src="WhatsApp Image 2026-10-18 at 1.07.39 PM.jpeg" alt="Addressing students in a classroom interaction session" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="mt-4 space-y-1">
+                        <span class="text-[11px] font-bold text-teal-300 uppercase tracking-wider">Student Mentorship</span>
+                        <h4 class="text-base font-bold text-white">Classroom Interaction & Training</h4>
+                        <p class="text-xs text-slate-400">Directly engaging with students in classrooms to impart practical AI engineering and career skills.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="glass-card rounded-2xl p-4 group lg:col-span-2">
+                    <div class="overflow-hidden rounded-xl aspect-[16/9] bg-slate-900">
+                        <img src="WhatsApp Image 2026-10-18 at 1.07.25 PM.jpeg" alt="Team members standing in front of technology-themed wall map" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="mt-4 space-y-1">
+                        <span class="text-[11px] font-bold text-warmGold uppercase tracking-wider">Institutional Connections</span>
+                        <h4 class="text-base font-bold text-white">Technology Infrastructure & Team Presence</h4>
+                        <p class="text-xs text-slate-400">Group photograph showcasing institutional engagement across Karnataka technology hubs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & LOCATION SECTION -->
+    <section id="contact" class="py-20 bg-techNavy border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-electricTeal/10 text-electricTeal text-xs font-bold uppercase tracking-wider border border-electricTeal/20">
+                        Get In Touch
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Connect with Namma Web Advanced AI Research Labs
+                    </h2>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Whether you represent an educational institution, a corporate partner, or an aspiring student, reach out to explore our AI research labs and internship grants.
+                    </p>
+
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-electricTeal/10 text-electricTeal"><i data-lucide="map-pin" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Nelamangala Branch Headquarters</h4>
+                                <p class="text-xs text-slate-400 mt-0.5">No. 27, Jayant Arcade, Next to Harsha International Public School, Ms Ramaiah Harsha Hospital Road, Nanjappa Layout, Vijayanagara, Nelamangala Town, Karnataka - 562 123</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-electricTeal/10 text-electricTeal"><i data-lucide="building" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Bengaluru Operations</h4>
+                                <p class="text-xs text-slate-400 mt-0.5">Peenya Industrial Hub & Bengaluru Tech Centre</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-electricTeal/10 text-electricTeal"><i data-lucide="mail" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Official Email</h4>
+                                <a href="mailto:info@nammaweb.com" class="text-xs text-electricTeal underline mt-0.5 block">info@nammaweb.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-electricTeal/10 text-electricTeal"><i data-lucide="user-check" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Founder & Leadership</h4>
+                                <p class="text-xs text-slate-400 mt-0.5">Mallikarjun S. Nandyal — Founder, Director & CEO</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6">
+                    <div class="glass-card p-8 rounded-3xl shadow-2xl space-y-6">
+                        <h3 class="text-2xl font-bold text-white">Institutional Enquiry Form</h3>
+                        <p class="text-xs text-slate-300">
+                            Fill out your details to request a college partnership presentation, student internship enrollment, or faculty briefing.
+                        </p>
+
+                        <form @submit.prevent="alert('Thank you! Your enquiry has been received by Namma Web AI Labs. We will contact you shortly.')" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name</label>
+                                <input type="text" required placeholder="e.g. Prof. Ramesh Kumar / Student Name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electricTeal">
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+                                    <input type="email" required placeholder="name@college.edu" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electricTeal">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Phone Number</label>
+                                    <input type="tel" required placeholder="+91 98765 43210" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electricTeal">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Institution / College Name</label>
+                                <input type="text" placeholder="e.g. Karnataka Degree College" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electricTeal">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Enquiry Type / Program Track</label>
+                                <select class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electricTeal">
+                                    <option>College Internship Grant (₹9,000 Offer)</option>
+                                    <option>BCA Internship Track (AI & Software Engineering)</option>
+                                    <option>BBA Internship Track (AI & Business Operations)</option>
+                                    <option>BCOM Internship Track (FinTech & Compliance)</option>
+                                    <option>General Institutional Partnership</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Message or Specific Requirements</label>
+                                <textarea rows="3" placeholder="Please mention preferred dates for campus presentation..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electricTeal"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-electricTeal hover:bg-teal-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-electricTeal/30 transition-all text-sm">
+                                Submit Enquiry to Namma Web Labs
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white rounded-lg p-1.5 flex items-center justify-center">
+                            <img src="logo.jpeg" alt="Namma Web official logo" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-lg font-bold text-white tracking-tight">NAMMA WEB AI LABS</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Namma Web Advanced AI Research Labs — Namma Web LLP. DPIIT Recognized Startup (DIPP199820) and ISO 21001:2018 Certified Institution delivering sovereign edge-AI and production-grade tech infrastructure for Karnataka colleges and students.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-1 text-[10px] font-semibold bg-slate-900 text-teal-400 rounded border border-teal-500/20">DPIIT: DIPP199820</span>
+                        <span class="px-2.5 py-1 text-[10px] font-semibold bg-slate-900 text-amber-400 rounded border border-amber-500/20">ISO 21001:2018</span>
+                        <span class="px-2.5 py-1 text-[10px] font-semibold bg-slate-900 text-purple-400 rounded border border-purple-500/20">FKCCI Winner</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Navigation</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#overview" class="hover:text-electricTeal transition-colors">Overview</a></li>
+                        <li><a href="#about" class="hover:text-electricTeal transition-colors">About Namma Web</a></li>
+                        <li><a href="#internships" class="hover:text-electricTeal transition-colors">Internship Tracks</a></li>
+                        <li><a href="#partnership" class="hover:text-electricTeal transition-colors">College Internship Grant</a></li>
+                        <li><a href="#videos" class="hover:text-electricTeal transition-colors">Student Reviews (21 Videos)</a></li>
+                        <li><a href="#impact" class="hover:text-electricTeal transition-colors">Institutional Gallery</a></li>
+                        <li><a href="#contact" class="hover:text-electricTeal transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Internship Programs</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#internships" class="hover:text-electricTeal transition-colors">BCA — AI & Software Engineering</a></li>
+                        <li><a href="#internships" class="hover:text-warmGold transition-colors">BBA — AI & Business Operations</a></li>
+                        <li><a href="#internships" class="hover:text-teal-300 transition-colors">BCOM — FinTech & Compliance</a></li>
+                        <li><a href="#partnership" class="hover:text-white transition-colors">College Internship Grant Offer</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Leadership & Office</h4>
+                    <div class="text-xs space-y-1.5">
+                        <p class="text-white font-semibold">Mallikarjun S. Nandyal</p>
+                        <p class="text-slate-400">Founder, Director & CEO</p>
+                        <p class="pt-1 text-slate-300">Nelamangala Branch HQ:</p>
+                        <p class="text-slate-400">Jayant Arcade, Nelamangala Town, Bengaluru, Karnataka - 562123</p>
+                        <p class="pt-1">Email: <a href="mailto:info@nammaweb.com" class="text-electricTeal underline">info@nammaweb.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>© <span x-text="new Date().getFullYear()"></span> Namma Web LLP — Namma Web Advanced AI Research Labs. All rights reserved.</p>
+                <p class="text-center">Responsible AI & Sovereign Technology Infrastructure Initiative for Karnataka Higher Education.</p>
+                <div class="flex items-center space-x-4">
+                    <a href="#overview" class="hover:text-slate-400">Privacy Policy</a>
+                    <span>•</span>
+                    <a href="#overview" class="hover:text-slate-400">Terms of Institutional Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ALPINE.JS APP LOGIC & VIDEO RECORDS -->
+    <script>
+        function nammaWebAppData() {
+            return {
+                mobileMenuOpen: false
+            }
+        }
+
+        function videoGallery() {
+            return {
+                filter: 'all',
+                videos: [
+                    // --- 13 YOUTUBE SHORTS ---
+                    { id: 'yt-1', platform: 'youtube', videoId: 'uawzwgw7L1Q', url: 'https://youtube.com/shorts/uawzwgw7L1Q', title: 'Student Review 01 - AI Practical Training' },
+                    { id: 'yt-2', platform: 'youtube', videoId: '94dgNPENUgI', url: 'https://youtube.com/shorts/94dgNPENUgI', title: 'Student Review 02 - Software Engineering Experience' },
+                    { id: 'yt-3', platform: 'youtube', videoId: 'bwhXsVrLigCU', url: 'https://youtube.com/shorts/bwhXsVrLigCU', title: 'Student Review 03 - Internship Project Showcase' },
+                    { id: 'yt-4', platform: 'youtube', videoId: 'aehFuFVF4XM', url: 'https://youtube.com/shorts/aehFuFVF4XM', title: 'Student Review 04 - Python & FastAPI Workflow' },
+                    { id: 'yt-5', platform: 'youtube', videoId: 'kp1iM6miJGM', url: 'https://youtube.com/shorts/kp1iM6miJGM', title: 'Student Review 05 - Local RAG & ChromaDB Labs' },
+                    { id: 'yt-6', platform: 'youtube', videoId: 'nhji0ewelXQ', url: 'https://youtube.com/shorts/nhji0ewelXQ', title: 'Student Review 06 - College Partnership Feedback' },
+                    { id: 'yt-7', platform: 'youtube', videoId: 'TaZHfSzWKU0', url: 'https://youtube.com/shorts/TaZHfSzWKU0', title: 'Student Review 07 - BBA Business Operations' },
+                    { id: 'yt-8', platform: 'youtube', videoId: 'b-INdcbhNpA', url: 'https://youtube.com/shorts/b-INdcbhNpA', title: 'Student Review 08 - BCOM FinTech & Tax Compliance' },
+                    { id: 'nv-1', platform: 'youtube', videoId: 'R-WOuaSl2d0', url: 'https://youtube.com/shorts/R-WOuaSl2d0', title: 'Student Review 09 - Hands-on Tech Infrastructure' },
+                    { id: 'yt-10', platform: 'youtube', videoId: 'gRrLVGHGK_o', url: 'https://youtube.com/shorts/gRrLVGHGK_o', title: 'Student Review 10 - InfiniTalent Placement Support' },
+                    { id: 'yt-11', platform: 'youtube', videoId: 'cNlep-DEeuk', url: 'https://youtube.com/shorts/cNlep-DEeuk', title: 'Student Review 11 - Nelamangala Branch Visit' },
+                    { id: 'yt-12', platform: 'youtube', videoId: 'CEcEG2gWXUc', url: 'https://youtube.com/shorts/CEcEG2gWXUc', title: 'Student Review 12 - ISO Certified Training Quality' },
+                    { id: 'yt-13', platform: 'youtube', videoId: 'BPfliDrjN_s', url: 'https://youtube.com/shorts/BPfliDrjN_s', title: 'Student Review 13 - Final Internship Graduation' },
+
+                    // --- 8 INSTAGRAM REELS ---
+                    { id: 'ig-1', platform: 'instagram', videoId: 'DcgCM4tJFs6', url: 'https://www.instagram.com/reel/DcgCM4tJFs6/', title: 'Intern Testimonial 01 - Campus Presentation' },
+                    { id: 'ig-2', platform: 'instagram', videoId: 'DcgBokspidu', url: 'https://www.instagram.com/reel/DcgBokspidu/', title: 'Intern Testimonial 02 - AI Lab Innovation' },
+                    { id: 'ig-3', platform: 'instagram', videoId: 'DNNjIF-Jo0U', url: 'https://www.instagram.com/reel/DNNjIF-Jo0U/', title: 'Intern Testimonial 03 - College Collaboration' },
+                    { id: 'ig-4', platform: 'instagram', videoId: 'DMw-5bCpBfs', url: 'https://www.instagram.com/reel/DMw-5bCpBfs/', title: 'Intern Testimonial 04 - BCA Software Track' },
+                    { id: 'ig-5', platform: 'instagram', videoId: 'DMw-WJpp9Ha', url: 'https://www.instagram.com/reel/DMw-WJpp9Ha/', title: 'Intern Testimonial 05 - BBA Growth Operations' },
+                    { id: 'ig-6', platform: 'instagram', videoId: 'DMue280pyRG', url: 'https://www.instagram.com/reel/DMue280pyRG/', title: 'Intern Testimonial 06 - BCOM FinTech Systems' },
+                    { id: 'ig-7', platform: 'instagram', videoId: 'DMuKGW9zMgi', url: 'https://www.instagram.com/reel/DMuKGW9zMgi/', title: 'Intern Testimonial 07 - Peenya Tech Hub Tour' },
+                    { id: 'ig-8', platform: 'instagram', videoId: 'DMsHfH9ROOX', url: 'https://www.instagram.com/reel/DMsHfH9ROOX/', title: 'Intern Testimonial 08 - Success & Placement Readiness' }
+                ],
+                get filteredVideos() {
+                    if (this.filter === 'youtube') return this.videos.filter(v => v.platform === 'youtube');
+                    if (this.filter === 'instagram') return this.videos.filter(v => v.platform === 'instagram');
+                    return this.videos;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
